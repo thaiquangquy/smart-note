@@ -1,4 +1,3 @@
-import React from "react";
 import SidebarProps from "../interfaces/SidebarProps";
 
 export default function Sidebar(props: SidebarProps) {
@@ -6,11 +5,27 @@ export default function Sidebar(props: SidebarProps) {
     <div key={note.id}>
       <div
         className={`title ${
-          note.id === props.currentNote.id ? "selected-note" : ""
+          note.id === props.currentNoteId ? "selected-note" : ""
         }`}
-        onClick={() => props.setCurrentNoteId(note.id)}
+        onClick={() => {
+          if (note.id) {
+            props.setCurrentNoteId(note.id);
+          }
+        }}
       >
-        <h4 className="text-snippet">Note {index + 1}</h4>
+        <h4 className="text-snippet">
+          {note.body ? note.body.split("\n")[0] : ""}
+        </h4>
+        <button
+          className="delete-btn"
+          onClick={() => {
+            if (note.id) {
+              props.deleteNote(note.id);
+            }
+          }}
+        >
+          <i className="gg-trash trash-icon"></i>
+        </button>
       </div>
     </div>
   ));
